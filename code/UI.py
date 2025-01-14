@@ -163,6 +163,7 @@ def match_reset():  # Reset match at any point
     # Add initial widgets back
     greet.pack(pady=20)
     number_of_wicket.pack(pady=5)
+    number_of_wicket_entry.delete(0, 'end')
     number_of_wicket_entry.pack(pady=10)
     heads.pack()
     tails.pack()
@@ -174,7 +175,11 @@ def user_runs(index):
     runs = [1, 2, 3, 4, 6]
     return int(runs[index])
 
-
+def validate_number_of_wickets(P):
+    if P.isdigit() or P == "":
+        return True
+    return False
+    
 def match_simulation():  # User batting first code
     totalUserRuns = tk.IntVar()  # Setting initial score and wickets to 0
     totalUserRuns.set(0)
@@ -1489,9 +1494,10 @@ selected_value = tk.StringVar(
 
 selected_value_batting_bowling = tk.StringVar(value="3")
 
+vcmd = (root.register(validate_number_of_wickets), '%P')
 
 # entry widget details
-number_of_wicket_entry = tk.Entry(root, text="Number of wickets")
+number_of_wicket_entry = tk.Entry(root, validate='key', validatecommand=vcmd, text="Number of wickets")
 
 # Root label details
 greet = tk.Label(
